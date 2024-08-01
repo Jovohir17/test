@@ -1,4 +1,21 @@
 @charset "UTF-8";
+/* Для вебkit-браузеров (Chrome, Safari) */
+body::-webkit-scrollbar {
+  width: 0; /* Устанавливаем ширину полосы прокрутки на 0 */
+  height: 0; /* Устанавливаем высоту полосы прокрутки на 0 */
+}
+
+/* Для всех браузеров */
+body {
+  overflow: -moz-scrollbars-none; /* Отключаем полосы прокрутки для Firefox */
+  -ms-overflow-style: none; /* Отключаем полосы прокрутки для IE и Edge */
+}
+
+/* Скрываем полосы прокрутки для всех элементов на странице */
+html, body {
+  scrollbar-width: none; /* Firefox */
+}
+
 .light {
   margin: 0;
 }
@@ -27,7 +44,7 @@
   align-items: center;
 }
 .light section {
-  margin-bottom: 10px;
+  margin-bottom: 129px;
   width: 100%;
   height: 100%;
   border-top-left-radius: 16px;
@@ -39,6 +56,17 @@
   align-items: center;
 }
 .light h1 {
+  width: 358px;
+  color: rgb(34, 34, 34);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: left;
+  font-family: Montserrat;
+  margin-top: 32px;
+  padding-bottom: 16px;
+}
+.light .gr {
   width: 358px;
   color: rgb(34, 34, 34);
   font-size: 20px;
@@ -116,7 +144,7 @@
   -moz-appearance: none;
 }
 .light .dropdown-container::after {
-  clip-path: inset(36% 56% 0 0);
+  clip-path: inset(37% 52% 0 0);
   margin-top: -20px;
   content: "▼";
   border: 2px solid rgb(102, 102, 102);
@@ -203,6 +231,7 @@
   text-decoration: none;
 }
 .light .massage {
+  bottom: 112px;
   width: 149px;
   height: 49px;
   gap: 10px;
@@ -214,7 +243,6 @@
   background: rgb(255, 255, 255);
   position: fixed;
   align-items: center;
-  bottom: 20px;
   right: 20px;
   transition: width 0.3s, opacity 0.3s;
 }
@@ -317,6 +345,15 @@
   /* Textarea */
   /* Blur effect for background */
   margin: 0;
+}
+.dark nav {
+  background: rgb(27, 27, 27);
+}
+.dark .active p {
+  color: white !important;
+}
+.dark .active img {
+  filter: contrast(2175%) brightness(100%) !important;
 }
 .dark body.dark {
   background-color: #121212;
@@ -486,7 +523,7 @@
   align-items: center;
 }
 .dark section {
-  margin-bottom: 10px;
+  margin-bottom: 129px;
   width: 100%;
   height: 100%;
   border-top-left-radius: 16px;
@@ -575,7 +612,7 @@
   -moz-appearance: none;
 }
 .dark .dropdown-container::after {
-  clip-path: inset(36% 56% 0 0);
+  clip-path: inset(37% 52% 0 0);
   margin-top: -20px;
   content: "▼";
   border: 2px solid rgb(255, 255, 255);
@@ -662,6 +699,7 @@
   text-decoration: none;
 }
 .dark .massage {
+  bottom: 112px;
   width: 149px;
   height: 49px;
   gap: 10px;
@@ -673,7 +711,6 @@
   background: rgb(34, 34, 34);
   position: fixed;
   align-items: center;
-  bottom: 20px;
   right: 20px;
   transition: width 0.3s, opacity 0.3s;
 }
@@ -921,6 +958,72 @@ input::placeholder {
 .blurred {
   filter: blur(5px);
   transition: filter 0.3s ease;
+}
+
+nav {
+  width: 100%;
+  height: 102px;
+  box-sizing: border-box;
+  border-bottom: 0.3300000131px solid rgba(60, 60, 60, 0.36);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav .blocks {
+  display: flex;
+  gap: 10px;
+}
+nav .blocks .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav .blocks p {
+  margin-top: 8px;
+  color: rgb(164, 164, 164);
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+nav .blocks .element1 {
+  width: 112px;
+}
+nav .blocks .element2 {
+  width: 112px;
+}
+nav .blocks .element3 {
+  width: 112px;
+}
+
+.background.blurred {
+  filter: blur(5px); /* Пример размытия */
+}
+
+/* Стиль по умолчанию */
+p {
+  color: black;
+}
+
+/* Активный стиль */
+p.active {
+  color: red; /* или другой цвет для активного состояния */
+}
+
+.active p {
+  color: black !important;
+}
+
+.active img {
+  filter: invert(100%) !important;
+}
+
+nav {
+  background: #FFFFFF;
+  position: fixed;
+  bottom: 0;
 }
 
 /*# sourceMappingURL=Index.css.map */
