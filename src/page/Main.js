@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Main = () => {
     const [activeButton, setActiveButton] = useState('task');
@@ -6,9 +6,21 @@ const Main = () => {
     const [theme, setTheme] = useState('light'); // Default theme
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control popup visibility
     const [selectedElement, setSelectedElement] = useState('element2'); // State for selected element
+    const [prevScrollY, setPrevScrollY] = useState(0); // State to track previous scroll position
 
     const handleScroll = () => {
-        setIsScrolled(window.scrollY > 0);
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        // Determine scroll direction
+        if (scrollY > prevScrollY) {
+            // Scrolling down
+            setIsScrolled(true);
+        } else if (scrollY < prevScrollY) {
+            // Scrolling up
+            setIsScrolled(false);
+        }
+
+        setPrevScrollY(scrollY);
     };
 
     useEffect(() => {
@@ -16,7 +28,7 @@ const Main = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [prevScrollY]);
 
     const handleButtonClick = (buttonType) => {
         setActiveButton(buttonType);
@@ -45,7 +57,6 @@ const Main = () => {
     const handleElementClick = (element) => {
         setSelectedElement(element);
     };
-
     return (
         <div className="background ">
             <div className="blur">
@@ -349,7 +360,7 @@ const Main = () => {
                     )}
 
                     <div className="center">
-                        <nav>
+                        <nav className={`h1 ${isScrolled ? 'hidden' : ''}`}>
 
                             <div className="blocks">
                                 <div className={`element1 ${selectedElement === 'element1' ? 'active' : ''}`}

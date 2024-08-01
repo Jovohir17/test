@@ -272,7 +272,6 @@ html, body {
     position: fixed;
     align-items: center;
     right: 20px;
-    transition: width 0.3s, opacity 0.3s;
   }
 
   .massage img {
@@ -286,7 +285,8 @@ html, body {
     font-size: 14px;
     font-weight: 600;
     margin-left: 10px;
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
+    opacity: 100%;
   }
 
   .massage:hover {
@@ -295,9 +295,15 @@ html, body {
 
   .massage.scrolled {
     width: 49px;
+    margin-bottom: -100px;
+  }
+
+  .massage.img.scrolled {
+    margin-left: 90px;
   }
 
   .massage.scrolled p {
+    opacity: 0;
     display: none;
   }
 
@@ -334,7 +340,7 @@ html, body {
   }
 
   .hidden {
-    display: none;
+    margin-bottom: -100px;
   }
 
   .scrolled {
@@ -808,7 +814,6 @@ html, body {
     position: fixed;
     align-items: center;
     right: 20px;
-    transition: width 0.3s, opacity 0.3s;
   }
 
   .massage img {
@@ -830,6 +835,7 @@ html, body {
   }
 
   .massage.scrolled {
+    margin-bottom: -100px;
     width: 49px;
   }
 
