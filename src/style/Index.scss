@@ -6,6 +6,9 @@
         src: url("../fonts/Montserrat.ttf") format("truetype");
       }
 
+      .dd{
+        opacity: 0;
+      }
       * {
         transition: 0.2s ease-in-out;
         margin: 0;
