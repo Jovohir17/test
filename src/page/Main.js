@@ -72,10 +72,10 @@ const Main = () => {
                         <img src="./imgs/img.png" alt=" "/>
                     </a>
 
-                    <a className={`theme ${isScrolled ? 'hidden' : ''}`} onClick={toggleTheme}>
-                        <img src={theme === 'light' ? './imgs/moon-solid.svg' : './imgs/sun-solid.svg'}
-                             alt="Toggle Theme"/>
-                    </a>
+                    {/*<a className={`theme ${isScrolled ? 'hidden' : ''}`} onClick={toggleTheme}>*/}
+                    {/*    <img src={theme === 'light' ? './imgs/moon-solid.svg' : './imgs/sun-solid.svg'}*/}
+                    {/*         alt="Toggle Theme"/>*/}
+                    {/*</a>*/}
                 </div>
 
                 <section>
