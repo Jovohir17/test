@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useGesture } from '@use-gesture/react';
 
 const Main = () => {
     const [activeButton, setActiveButton] = useState('task');
@@ -7,17 +8,35 @@ const Main = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control popup visibility
     const [selectedElement, setSelectedElement] = useState('element2'); // State for selected element
     const [prevScrollY, setPrevScrollY] = useState(0); // State to track previous scroll position
+    const [scrollTimeout, setScrollTimeout] = useState(null); // State to track scroll timeout
+
+    const SCROLL_THRESHOLD = 0.50; // Adjust this threshold as needed
+    const VELOCITY_THRESHOLD = 0.1; // Adjust this threshold as needed
 
     const handleScroll = () => {
         const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const deltaY = scrollY - prevScrollY;
 
-        // Determine scroll direction
-        if (scrollY > prevScrollY) {
-            // Scrolling down
-            setIsScrolled(true);
-        } else if (scrollY < prevScrollY) {
-            // Scrolling up
-            setIsScrolled(false);
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+
+        const newScrollTimeout = setTimeout(() => {
+            if (Math.abs(deltaY) < SCROLL_THRESHOLD) {
+                setIsScrolled(false);
+            }
+        }, 150);
+
+        setScrollTimeout(newScrollTimeout);
+
+        if (Math.abs(deltaY) > SCROLL_THRESHOLD && Math.abs(deltaY) / 100 > VELOCITY_THRESHOLD) {
+            if (deltaY > 0) {
+                // Scrolling down
+                setIsScrolled(true);
+            } else {
+                // Scrolling up
+                setIsScrolled(false);
+            }
         }
 
         setPrevScrollY(scrollY);
@@ -27,8 +46,11 @@ const Main = () => {
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
         };
-    }, [prevScrollY]);
+    }, [prevScrollY, scrollTimeout]);
 
     const handleButtonClick = (buttonType) => {
         setActiveButton(buttonType);
@@ -57,30 +79,49 @@ const Main = () => {
     const handleElementClick = (element) => {
         setSelectedElement(element);
     };
+
+    const bind = useGesture({
+        onDrag: ({ direction: [xDir], velocity }) => {
+            if (velocity > 0.2) {
+                if (xDir > 0) {
+                    // Swipe right
+                    if (selectedElement === 'element1') setSelectedElement('element2');
+                    else if (selectedElement === 'element2') setSelectedElement('element3');
+                } else {
+                    // Swipe left
+                    if (selectedElement === 'element3') setSelectedElement('element2');
+                    else if (selectedElement === 'element2') setSelectedElement('element1');
+                }
+            }
+        }
+    });
+
     return (
-        <div className="background ">
+        <div className="background">
+
             <div className="blur">
+                <div className="theme-toggle">
+                    <input type="checkbox" id="theme-toggle-checkbox" onChange={toggleTheme} />
+                    <label htmlFor="theme-toggle-checkbox" className="theme-toggle-label">
+                        <span className="sun-icon">☀️</span>
+                        <span className="moon-icon">🌑</span>
+                    </label>
+                </div>
                 <div className="buttons">
                     <a href="https://mail.google.com/mail/u/1/#inbox?compose=new"
                        className={`massage ${isScrolled ? 'scrolled' : ''}`}
                        id="massage-button">
-                        <img src="./imgs/ddd.png" alt=" "/>
+                        <img src="./imgs/ddd.png" alt=" " />
                         <p>Написать</p>
                     </a>
 
-                    <a href="mailto:example@gmail.com" className={`pc ${isScrolled ? 'hidden' : ''}`}>
-                        <img src="./imgs/img.png" alt=" "/>
+                    <a href="mailto:example@gmail.com"
+                       className={`pc ${isScrolled ? 'hidden' : ''}`}>
+                        <img src="./imgs/img.png" alt=" " />
                     </a>
-
-                    {/*<a className={`theme ${isScrolled ? 'hidden' : ''}`} onClick={toggleTheme}>*/}
-                    {/*    <img src={theme === 'light' ? './imgs/moon-solid.svg' : './imgs/sun-solid.svg'}*/}
-                    {/*         alt="Toggle Theme"/>*/}
-                    {/*</a>*/}
                 </div>
 
-                <section>
-
-
+                <section {...bind()}>
                     {selectedElement === 'element1' && (
                         <div className="center">
                             <p className="gr">Page 1</p>
@@ -90,8 +131,7 @@ const Main = () => {
                     {selectedElement === 'element2' && (
                         <div>
                             <div className="center">
-                                <h1>“Проектирование и авава ав ав конструирование систем безопасности частной
-                                    сети”</h1>
+                                <h1>“Проектирование и авава ав ав конструирование систем безопасности частной сети”</h1>
                             </div>
 
                             <div className="center">
@@ -118,7 +158,6 @@ const Main = () => {
                                         <option value="1">125 059 ₽</option>
                                         <option value="2">62 434 ₽</option>
                                         <option value="3">55 123 ₽</option>
-                                        {/* Add other options as needed */}
                                     </select>
                                 </div>
                             </div>
@@ -127,7 +166,6 @@ const Main = () => {
                                 <button className="add__button" onClick={togglePopup}>Добавить запись +</button>
                             </div>
 
-                            {/* Block for tasks and worked sections */}
                             {activeButton === 'task' ? (
                                 <>
                                     <p className="date">10 июля 2024</p>
@@ -237,6 +275,7 @@ const Main = () => {
                                         </div>
                                     </div>
                                 </>
+
                             ) : (
                                 <>
                                     <p className="date">11 июня 2013</p>
@@ -347,15 +386,14 @@ const Main = () => {
                                     </div>
 
                                 </>
+
                             )}
                         </div>
-
                     )}
-
 
                     {selectedElement === 'element3' && (
                         <div className="center">
-                            <p className="gr">Page 2</p>
+                            <p className="gr">Page 3</p>
                         </div>
                     )}
 
@@ -397,9 +435,8 @@ const Main = () => {
                     </div>
 
                 </section>
-
             </div>
-            {/* Popup */}
+
             {isPopupOpen && (
                 <div className="popup frame">
                     <div className="popup-content">
