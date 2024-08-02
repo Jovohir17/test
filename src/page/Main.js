@@ -11,7 +11,7 @@ const Main = () => {
     const [scrollTimeout, setScrollTimeout] = useState(null); // State to track scroll timeout
 
     const SCROLL_THRESHOLD = 0.50; // Adjust this threshold as needed
-    const VELOCITY_THRESHOLD = 0.1; // Adjust this threshold as needed
+    const VELOCITY_THRESHOLD = 0.07; // Adjust this threshold as needed
 
     const handleScroll = () => {
         const scrollY = window.scrollY || document.documentElement.scrollTop;
